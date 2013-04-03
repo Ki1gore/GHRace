@@ -3,6 +3,8 @@
     <head>
         <meta charset="utf-8" />
         <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <script src="~/Scripts/jquery-1.7.1.min.js"></script>
+        <script src="~/Scripts/jquery-ui-1.8.20.min.js"></script>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
@@ -23,6 +25,7 @@
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
                             <li>@Html.ActionLink("About", "About", "Home")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                            <li>@Html.ActionLink("Load", "Load", "Home")</li>
                         </ul>
                     </nav>
                 </div>

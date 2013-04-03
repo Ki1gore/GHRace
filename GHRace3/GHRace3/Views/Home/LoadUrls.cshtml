@@ -1,0 +1,51 @@
+﻿@model IEnumerable<GHRace3.ViewModels.RaceViewModel>
+
+@{
+    ViewBag.Title = "LoadUrls";
+}
+<link href="~/Content/styles.css" rel="stylesheet" />
+
+<table border="1">
+    <tr class="table-header">
+        <td>Track</td>
+        <td>Name</td>
+        <td>Date</td>
+        <td>Finish</td>
+        <td>Grade</td>
+        <td>Time/distance1</td>
+        <td>Time/distance2</td>
+        <td>Time/distance3</td>
+        <td>Time/sec</td>
+        <td>SP1</td>
+        <td>SP2</td>
+        <td>SP3</td>
+        <td>Distance</td>
+        <td>Comments</td>
+        <td>Trainer</td>
+        <td>Trap</td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Trackname</td>
+            <td>@item.GreyhoundName</td>
+            <td>@item.RaceDate</td>
+            <td>@item.Finish</td>
+            <td>@item.Grade</td>
+            <td>@item.TimeDistance1</td>
+            <td>@item.TimeDistance2</td>
+            <td>@item.TimeDistance3</td>
+            <td>@item.TimeSec</td>
+            <td>@item.SP1</td>
+            <td>@item.SP2</td>
+            <td>@item.SP3</td>
+            <td>@item.RaceDistance</td>
+            <td>@item.Comments</td>
+            <td>@item.Trainer</td>
+            <td>@item.Trap</td>
+        </tr>
+    }
+
+</table>
+
+

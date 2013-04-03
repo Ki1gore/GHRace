@@ -6,6 +6,13 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using GHRace3.DAL;
+using GHRace3.Models;
+using System.Data.Entity;
+using Autofac;
+using Utilities;
+using Interfaces;
+using RaceDataService;
 
 namespace GHRace3
 {
@@ -14,8 +21,11 @@ namespace GHRace3
 
     public class MvcApplication : System.Web.HttpApplication
     {
+        public static IContainer Container { get; set; }
+
         protected void Application_Start()
         {
+            Database.SetInitializer<GHRaceContext>(new GHRaceInitializer());
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
@@ -23,6 +33,16 @@ namespace GHRace3
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+            RegisterTypes();
+            
+        }
+
+        private void RegisterTypes()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterType<CommonUtilities>().As<ICommonUtilities>();
+            builder.RegisterType<RetrieveRaceData>().As<IRetrieveRaceData>();
+            Container = builder.Build();
         }
     }
 }

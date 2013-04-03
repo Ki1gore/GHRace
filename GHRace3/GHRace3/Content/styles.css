@@ -1,0 +1,8 @@
+﻿tr, td{
+    border: solid 1px;
+    font-size:x-small;
+}
+
+.table-header td{
+    font-weight:600;
+}
