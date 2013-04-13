@@ -97,7 +97,7 @@ namespace GHRace3.Controllers
             {
                 tracks.Add(ModelConverter.ConvertToTrack(item));
             }
-            dba.Add(tracks);
+            //dba.Add(tracks);
             foreach (var item in tracks)
             {
                 foreach (var g in item.Greyhounds)

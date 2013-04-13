@@ -2,10 +2,10 @@
     background-color:#F8F8F8;
 }
 
-/*tr, td{
-    border: solid 1px;
+tr, td{
+    
     font-size:x-small;
-}*/
+}
 
 .table-header td{
     font-weight:600;

@@ -10,6 +10,7 @@ namespace GHRace3.dummyScoreCalc
     public class scoreCalc
     {
         private const string FILLERTEXT = "field text";
+        Random random = new Random();
         public List<scores> GetScores(List<List<Greyhound>> runners)
         {
             List<scores> raceScores = new List<scores>();
@@ -40,18 +41,12 @@ namespace GHRace3.dummyScoreCalc
                     scoreField5 = FILLERTEXT,
                     scoreField6 = FILLERTEXT,
                     Name = item.Name,
-                    Score = RandomNumber(1, 1000),
+                    Score = random.Next(1, 1000),
                     scoreField7 = FILLERTEXT,
                     Trap = item.Races.First().Trap
                 });
             }
             return sc;
-        }
-
-        private int RandomNumber(int min, int max)
-        {
-            Random random = new Random();
-            return random.Next(min, max);
         }
     }
 }
