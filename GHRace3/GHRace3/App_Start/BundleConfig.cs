@@ -38,6 +38,23 @@ namespace GHRace3
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
+
+
+            #region Foundation Bundles
+            ////If your project requires jQuery, you may remove the zepto bundle
+            //bundles.Add(new ScriptBundle("~/bundles/zepto").Include(
+            //        "~/Scripts/zepto.js"));
+
+            bundles.Add(new StyleBundle("~/Content/foundation/css").Include(
+                       "~/Content/foundation/foundation.css",
+                       "~/Content/foundation/foundation.mvc.css",
+                       "~/Content/foundation/app.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/foundation").Include(
+                      "~/Scripts/foundation/foundation.js",
+                      "~/Scripts/foundation/foundation.*",
+                      "~/Scripts/foundation/app.js"));
+            #endregion
         }
     }
 }

@@ -21,9 +21,17 @@ namespace GHRace3.DAL
                     Track t = null;
                     if (ctx.Tracks.Count() > 0)
                     {
-                        t = (from Track tr in ctx.Tracks
-                             where tr.Name == track.Name
-                             select tr).Single();
+                        try
+                        {
+                            t = (from Track tr in ctx.Tracks
+                                 where tr.Name == track.Name
+                                 select tr).Single();
+                        }
+                        catch (Exception)
+                        {
+                            
+                        }
+                        
                     }
 
                     if (t == null) //no existing track

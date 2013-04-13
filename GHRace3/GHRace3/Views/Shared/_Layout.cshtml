@@ -3,8 +3,16 @@
     <head>
         <meta charset="utf-8" />
         <title>@ViewBag.Title - My ASP.NET MVC Application</title>
-        <script src="~/Scripts/jquery-1.7.1.min.js"></script>
-        <script src="~/Scripts/jquery-ui-1.8.20.min.js"></script>
+
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+
+
+        <script src="~/Scripts/knockout-2.1.0.js"></script>
+        
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
@@ -26,6 +34,7 @@
                             <li>@Html.ActionLink("About", "About", "Home")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                             <li>@Html.ActionLink("Load", "Load", "Home")</li>
+                            <li>@Html.ActionLink("Predict", "Predict", "Home")</li>
                         </ul>
                     </nav>
                 </div>
@@ -45,7 +54,7 @@
             </div>
         </footer>
 
-        @Scripts.Render("~/bundles/jquery")
-        @RenderSection("scripts", required: false)
+        @*@Scripts.Render("~/bundles/jquery")*@
+       @* @RenderSection("scripts", required: false)*@
     </body>
 </html>

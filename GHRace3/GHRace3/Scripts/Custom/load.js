@@ -1,20 +1,37 @@
 ﻿
-function UrlInputClick() {
-    var data = JSON.stringify({ Url: $("#urls").val() });
-    $.ajax({
-        url: '/Home/LoadUrls',
-        type: 'POST',
-        dataType: 'json',
-        data: data,
-        contentType: 'application/json; charset=utf-8',
-        success: function (data) {
-            if (data != null) {
-                //alert(data[0].Greyhounds[0].Races[0].Comments);
-            }
-        }
+function LoadClick() {
+    //$('#clickme').click(function () {
+    //    $('#book').animate({
+    //        opacity: 0.25,
+    //        left: '+=50',
+    //        height: 'toggle'
+    //    }, 5000, function () {
+    //        // Animation complete.
+    //    });
+    //});
+    $("#progress-bar").animate({
+        width: '100%'
+    }, 10000, function () {
+        //complete
     });
+
 }
 
+//$("#race-results").ready(function () {
+//    if ($(this).hidden) {
+//        $("#url-form").slideUp(300, function () { });
+//    }
+    
+//});
+
+$("#minimize").click(function () {
+    $("#url-form").slideUp(300, function () { });
+});
+
+$("#maximize").click(function () {
+    $("#url-form").slideDown(300, function () { });
+});
+
 $(document).ready(function () {
-    $("#url-input").click(UrlInputClick);
+    $("#load-button").click(LoadClick);
 });

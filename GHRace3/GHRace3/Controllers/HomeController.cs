@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using GHRace3.DAL;
+using GHRace3.dummyScoreCalc;
 using GHRace3.Models;
 using GHRace3.ViewModels;
 using Interfaces;
@@ -9,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -19,9 +21,10 @@ namespace GHRace3.Controllers
     public class HomeController : Controller
     {
         private GHRaceContext ctx = new GHRaceContext();
+        
 
         public ActionResult Index()
-        {
+        { 
             ViewBag.Message = "Show home page";
 
             return View();
@@ -64,13 +67,13 @@ namespace GHRace3.Controllers
             return View(temp);
         }
 
-        public ActionResult Load()
+        public ActionResult Load(UrlString urlList)
         {
-            return View();
-        }
-
-        public ActionResult LoadUrls(UrlString urlList)
-        {
+            if (urlList.Url == null)
+            {
+                return View();
+            }
+           
             List<RaceViewModel> rvmList = new List<RaceViewModel>(); //list of each individual race (ie 19:30 (race1), 19:45 (race2), etc)
             string[] urls = urlList.Url.Replace('\r', ' ').Trim().Split('\n');
 
@@ -80,7 +83,7 @@ namespace GHRace3.Controllers
 
             using (WebClient wb = new WebClient())
             {
-                foreach (var url in urls)
+                foreach (var url in urls.Where(u => u.Contains("http")))
                 {
                     p.Add(url, wb.DownloadString(new Uri(url)));
                 }
@@ -93,9 +96,8 @@ namespace GHRace3.Controllers
             foreach (var item in trackData)
             {
                 tracks.Add(ModelConverter.ConvertToTrack(item));
-                //_ctx.Tracks.Add(ModelConverter.ConvertToTrack(item));
             }
-            //dba.Add(tracks);
+            dba.Add(tracks);
             foreach (var item in tracks)
             {
                 foreach (var g in item.Greyhounds)
@@ -122,10 +124,57 @@ namespace GHRace3.Controllers
                     });
                 }
             }
-            
-
             return View(rvmList);
             //return null;
+        }
+
+        public ActionResult Predict()
+        {
+            return View();
+        }
+
+        public ActionResult GetPredictions(List<Runner> runners)
+        {
+            //TODO: check runners for more than one race so that multiple races can be predicted
+            List<List<Greyhound>> allRunners = new List<List<Greyhound>>();
+            List<Greyhound> singleRace = new List<Greyhound>();
+            int count = 1;
+            //foreach (var item in runners)
+            while (true)
+            {
+                {
+                    try
+                    {
+                        //Greyhound g = ctx.Greyhounds.Single(gh => gh.Name == item.Name);
+                        Greyhound g = ctx.Greyhounds.Single(gh => gh.GreyhoundID == count);
+                        singleRace.Add(g);
+                    }
+                    catch (Exception)
+                    {
+                        singleRace.Add(new Greyhound());
+                    }
+                    count++;
+                    if (count == 7)
+                    {
+                        break;
+                    }
+                }
+            }
+           
+            allRunners.Add(singleRace);
+            scoreCalc sc = new scoreCalc();
+            return Json(sc.GetScores(allRunners));
+        }
+
+        public ActionResult GetAutocompleteNames(Message searchTerm)
+        {
+            var query = from n in ctx.Greyhounds
+                        where n.Name.StartsWith(searchTerm.Content)
+                        select n.Name;
+
+            List<string> returnList = new List<string>(query);
+
+            return Json(returnList);
         }
     }
 }
