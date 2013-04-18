@@ -175,9 +175,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="DAL\DBAddRaces.cs" />
-    <Compile Include="DAL\DBGetRaces.cs" />
-    <Compile Include="DAL\GHRaceInitializer.cs" />
+    <Compile Include="DBService\GHRaceDBAccessService.cs" />
+    <Compile Include="DBService\GHRaceInitializer.cs" />
     <Compile Include="dummyScoreCalc\scoreCalc.cs" />
     <Compile Include="dummyScoreCalc\scores.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -189,10 +188,13 @@
     <Compile Include="Models\Greyhound.cs" />
     <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\ModelConverter.cs" />
-    <Compile Include="Models\Race.cs" />
+    <Compile Include="Models\Result.cs" />
     <Compile Include="Models\Track.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\DBInfoViewModel.cs" />
+    <Compile Include="ViewModels\LoadStatusViewModel.cs" />
     <Compile Include="ViewModels\Message.cs" />
+    <Compile Include="ViewModels\RaceMeetRunners.cs" />
     <Compile Include="ViewModels\RaceViewModel.cs" />
     <Compile Include="ViewModels\Runner.cs" />
     <Compile Include="ViewModels\RunnersListViewModel.cs" />
@@ -203,7 +205,6 @@
     <Content Include="Content\foundation\foundation.css" />
     <Content Include="Content\foundation\foundation.mvc.css" />
     <Content Include="Content\foundation\normalize.css" />
-    <Content Include="Content\foundation_grid_override.css" />
     <Content Include="Content\styles.css" />
     <Content Include="Content\text\ipsum.txt" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -261,11 +262,9 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Foundation_readme.txt" />
-    <Content Include="RaceData\SampleData.xml" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
-    <Content Include="Scripts\Custom\home.js" />
     <Content Include="Scripts\Custom\load.js" />
     <Content Include="Scripts\Custom\predict.js" />
     <Content Include="Scripts\foundation\foundation.alerts.js" />
@@ -307,19 +306,6 @@
     </Content>
     <None Include="Content\Site.css.exclude" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Images\accent.png" />
-    <Content Include="Images\bullet.png" />
-    <Content Include="Images\heroAccent.png" />
-    <Content Include="Images\orderedList0.png" />
-    <Content Include="Images\orderedList1.png" />
-    <Content Include="Images\orderedList2.png" />
-    <Content Include="Images\orderedList3.png" />
-    <Content Include="Images\orderedList4.png" />
-    <Content Include="Images\orderedList5.png" />
-    <Content Include="Images\orderedList6.png" />
-    <Content Include="Images\orderedList7.png" />
-    <Content Include="Images\orderedList8.png" />
-    <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -330,18 +316,17 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Views\Home\Index.cshtml.exclude" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Shared\_Foundation.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Home\Index.cshtml.old" />
     <Content Include="Views\Home\Load.cshtml" />
     <Content Include="Views\Home\Predict.cshtml" />
     <Content Include="Views\Shared\Navbar.cshtml" />
-    <Content Include="Views\Shared\busyIndicator.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

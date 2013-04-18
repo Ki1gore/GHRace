@@ -6,6 +6,9 @@ using System.Web;
 
 namespace GHRace3.ViewModels
 {
+    /// <summary>
+    /// not used at the moment since results scraped from URL's are no longer sent back the view
+    /// </summary>
     public class RaceViewModel
     {
         public string Trackname { get; set; }

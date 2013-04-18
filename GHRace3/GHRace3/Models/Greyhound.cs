@@ -10,7 +10,7 @@ namespace GHRace3.Models
     {
         public int GreyhoundID { get; set; }
         public string Name { get; set; }
-        public virtual ICollection<Race> Races { get; set; }
+        public virtual ICollection<Result> Results { get; set; }
         public virtual Track Track { get; set; }
     }
 }

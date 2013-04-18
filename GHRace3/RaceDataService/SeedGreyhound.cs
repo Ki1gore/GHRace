@@ -12,6 +12,6 @@ namespace RaceDataService
     {
         public int GreyhoundID { get; set; }
         public string Name { get; set; }
-        public ICollection<IRace> Races { get; set; }
+        public ICollection<IResult> Races { get; set; }
     }
 }

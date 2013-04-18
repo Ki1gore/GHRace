@@ -12,7 +12,7 @@ namespace GHRace3.Models
     {
         public DbSet<Track> Tracks { get; set; }
         public DbSet<Greyhound> Greyhounds { get; set; }
-        public DbSet<Race> Races { get; set; }
+        public DbSet<Result> Results { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

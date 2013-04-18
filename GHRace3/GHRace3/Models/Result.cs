@@ -1,14 +1,15 @@
 ﻿using Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace GHRace3.Models
 {
-    public class Race
+    public class Result
     {
-        public int RaceID { get; set; }
+        public int ResultID { get; set; }
         public DateTime Date { get; set; }
         public string Grade { get; set; }
         public int Finish { get; set; }

@@ -1,4 +1,5 @@
-﻿using GHRace3.Models;
+﻿using GHRace3.DBService;
+using GHRace3.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace GHRace3.dummyScoreCalc
     {
         private const string FILLERTEXT = "field text";
         Random random = new Random();
+        GHRaceDBAccessService _dba;
         public List<scores> GetScores(List<List<Greyhound>> runners)
         {
             List<scores> raceScores = new List<scores>();
@@ -25,26 +27,31 @@ namespace GHRace3.dummyScoreCalc
 
         private scores GetIndividualRaceScores(List<Greyhound> race)
         {
+            _dba = new GHRaceDBAccessService();
             scores sc = new scores();
             sc.Scores = new List<score>();
             foreach (var item in race)
             {
-                sc.Scores.Add(new score
+                Greyhound g = _dba.GetGreyhound(item.Name);
+                if (g != null)
                 {
-                    Comments = item.Races.First().Comments,
-                    scoreField1 = true,
-                    NoData = false,
-                    GradesUsed = "A1, A2, A3, A4",
-                    scoreField2 = FILLERTEXT,
-                    scoreField3 = FILLERTEXT,
-                    scoreField4 = FILLERTEXT,
-                    scoreField5 = FILLERTEXT,
-                    scoreField6 = FILLERTEXT,
-                    Name = item.Name,
-                    Score = random.Next(1, 1000),
-                    scoreField7 = FILLERTEXT,
-                    Trap = item.Races.First().Trap
-                });
+                    sc.Scores.Add(new score
+                    {
+                        Comments = g.Results.First().Comments,
+                        scoreField1 = true,
+                        NoData = false,
+                        GradesUsed = "A1, A2, A3, A4",
+                        scoreField2 = FILLERTEXT,
+                        scoreField3 = FILLERTEXT,
+                        scoreField4 = FILLERTEXT,
+                        scoreField5 = FILLERTEXT,
+                        scoreField6 = FILLERTEXT,
+                        Name = g.Name,
+                        Score = random.Next(1, 1000),
+                        scoreField7 = FILLERTEXT,
+                        Trap = g.Results.First().Trap
+                    });
+                }
             }
             return sc;
         }

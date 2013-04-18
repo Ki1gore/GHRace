@@ -83,9 +83,9 @@ namespace RaceDataService
             return greyhoundList;
         }
 
-        private ICollection<IRace> GetRace(Runner race)
+        private ICollection<IResult> GetRace(Runner race)
         {
-            List<IRace> raceList = new List<IRace>();
+            List<IResult> raceList = new List<IResult>();
 
             raceList.Add(new SeedRace
             {
@@ -118,7 +118,7 @@ namespace RaceDataService
         }
 
         /// <summary>
-        /// this one removes all the ",,," etc and white space from the list, also it removes the title and links from the top
+        /// removes all the ",,," etc and white space from the list, also it removes the title and links from the top
         /// and bottom
         /// </summary>
         /// <param name="formatedMatchList"></param>
@@ -168,7 +168,7 @@ namespace RaceDataService
                 }
             }
             string s = sb.ToString();
-            return ReadyListForXML(temp);
+            return RemoveAllHeaders(temp);
             //remove footer
         }
 
@@ -178,7 +178,7 @@ namespace RaceDataService
         /// </summary>
         /// <param name="temp"></param>
         /// <returns></returns>
-        private List<string> ReadyListForXML(List<string> temp)
+        private List<string> RemoveAllHeaders(List<string> temp)
         {
             List<string> fullList = new List<string>();
 
@@ -236,8 +236,6 @@ namespace RaceDataService
                 sb.Append("\n");
             }
 
-            //txtList.Text = sb.ToString(); //put the list on the UI
-
             string[] raceSplit = sb.ToString().Split(raceDelimiter);
             var query = from string s in raceSplit
                         where s != string.Empty
@@ -264,13 +262,13 @@ namespace RaceDataService
             return meeting;
         }
 
-        private Race GetRace(List<Runner> list, List<string> raceInfo, List<string> raceData)
+        private Race GetRace(List<Runner> list, List<string> raceInfo, List<string> raceData) //raceData is results for 1 race - e.g wimbledon 19:30
         {
             Runner r = new Runner();
             int integerCount = 0;
-            for (int i = 0; i < 9; i++)
-            {
-                int j;
+            for (int i = 0; i < 9; i++) // should be able to count from 0 to 8 and only hit 2 integers (finish and trap) if more than
+            {                           // 2 are hit then some data is missing (time/sec is common) and the finish integer from the next 
+                int j;                  // race has been hit.  In this case, data is unusable so return empty object.
                 bool isInt = int.TryParse(raceData[i], out j);
                 if (isInt)
                 {
@@ -285,7 +283,7 @@ namespace RaceDataService
             r.Date = raceInfo[1];
             r.Grade = raceInfo[2];
             r.Distance = raceInfo[3];
-            if (raceInfo.Count > 4) //means we've got extra race details
+            if (raceInfo.Count > 4) //means we've got extra race details e.g. "THE SUE RYDER 'SUNSET STROLL' STAKES" - an actual title for the race
             {
                 r.Details = raceInfo[4];
             }
@@ -306,7 +304,7 @@ namespace RaceDataService
 
             try
             {
-                raceData.RemoveRange(0, 9);
+                raceData.RemoveRange(0, 9); //result added so remove it from the list
             }
             catch (Exception ex)
             {

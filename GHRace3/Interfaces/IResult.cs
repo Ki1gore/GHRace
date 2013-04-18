@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Interfaces
 {
-    public interface IRace
+    public interface IResult
     {
         string Comments { get; set; }
         DateTime Date { get; set; }

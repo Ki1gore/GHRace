@@ -41,7 +41,7 @@
   <ItemGroup>
     <Compile Include="ICommonUtilities.cs" />
     <Compile Include="IGreyhound.cs" />
-    <Compile Include="IRace.cs" />
+    <Compile Include="IResult.cs" />
     <Compile Include="IRetrieveRaceData.cs" />
     <Compile Include="ITrack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

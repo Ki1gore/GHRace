@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace RaceDataService
 {
     [Serializable]
-    public class SeedRace : IRace
+    public class SeedRace : IResult
     {
         public string Comments { get; set; }
 

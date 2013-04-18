@@ -1,56 +1,94 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Predict";
     Layout = "~/Views/Shared/_Foundation.cshtml";
 }
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
-<div class="row">
-    <div class="large-2 columns">
-    <fieldset>
-        <legend>Single Race</legend>
-            <!-- ko foreach: runners -->
-                <span data-bind="text: TrapLabel"></span>
-                <input type="text" data-bind="value: Name, ko_autocomplete: {trapValue: Trap}" />
-            <!-- /ko -->
-        <input data-bind="click: upload" class="small button" value="Load" readonly="true"/>
-    </fieldset>
-        
-    </div>
-   @* public string Name { get; set; }
-        public bool NoData { get; set; }
-        public bool scoreField1 { get; set; }
-        public int Score { get; set; }
-        public string Comments { get; set; }
-        public string scoreField2 { get; set; }
-        public int Trap { get; set; }
-        public string scoreField3 { get; set; }
-        public string scoreField4 { get; set; }
-        public string scoreField5 { get; set; }
-        public string scoreField6 { get; set; }
-        public string scoreField7 { get; set; }
-        public string GradesUsed { get; set; }*@
-    <div class="large-9 columns">
-        <fieldset>
-            <legend>Results</legend>
-            <table id="result-table">
-                <tr>
-                    <td>Name</td>
-                    <td>No Data</td>
-                    <td>Score Field 1</td>
-                    <td>Score</td>
-                    <td>Comments</td>
-                    <td>Score Field 2</td>
-                    <td>Trap</td>
-                    <td>Score Field 3</td>
-                    <td>Score Field 4</td>
-                    <td>Score Field 5</td>
-                    <td>Score Field 6</td>
-                    <td>Score Field 7</td>
-                    <td>Grades Used</td>
-                </tr>
-            </table>
-        </fieldset>
-    </div>
-</div>
 
+<div class="section-container tabs" data-section="tabs">
+    <section>
+        <p class="title" data-section-title><a href="#">Single Race</a></p>
+        <div class="content" data-section-content>
+            <div id="single-race-section" class="row">
+                <div class="large-12 columns">
+                    <h2>Single Race</h2>
+                    <p>Enter one runner per box.</p>
+                </div>
+                <div class="large-3 columns">
+                    <fieldset>
+                        <legend>Single Race</legend>
+                        <!-- ko foreach: runners -->
+                        <span data-bind="text: TrapLabel"></span>
+                        <input type="text" data-bind="value: Name, ko_autocomplete: {trapValue: Trap}" />
+                        <!-- /ko -->
+                        <a data-bind="click: upload" class="small button">Load</a>
+                    </fieldset>
+                </div>
+                <div class="large-9 columns">
+                    <fieldset>
+                        <legend>Results</legend>
+                        <table id="result-table">
+                            <tr>
+                                <td>Name</td>
+                                <td>No Data</td>
+                                <td>Score Field 1</td>
+                                <td>Score</td>
+                                <td>Comments</td>
+                                <td>Score Field 2</td>
+                                <td>Trap</td>
+                                <td>Score Field 3</td>
+                                <td>Score Field 4</td>
+                                <td>Score Field 5</td>
+                                <td>Score Field 6</td>
+                                <td>Score Field 7</td>
+                                <td>Grades Used</td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <p class="title" data-section-title><a href="#">Race Meeting</a></p>
+        <div class="content" data-section-content>
+            <div id="race-meeting-section" class="row">
+                <div class="large-12 columns">
+                    <h2>Race Meeting</h2>
+                    <p>Enter as many runners as desired, one runner to a line in the format "{Trap number} {Name}" e.g. "1 Vegas Gold".</p>
+                </div>
+                <div class="large-3 columns">
+                    <fieldset>
+                        <legend>Race Meeting</legend>
+                        <textarea id="race-meeting-textarea"></textarea>
+                        <a id="load-meeting" class="small button">Load</a>
+                    </fieldset>
+                </div>
+                <div class="large-9 columns">
+                    <fieldset>
+                        <legend>Results</legend>
+                        <table id="batch-result-table">
+                            <tr>
+                                <td>Name</td>
+                                <td>No Data</td>
+                                <td>Score Field 1</td>
+                                <td>Score</td>
+                                <td>Comments</td>
+                                <td>Score Field 2</td>
+                                <td>Trap</td>
+                                <td>Score Field 3</td>
+                                <td>Score Field 4</td>
+                                <td>Score Field 5</td>
+                                <td>Score Field 6</td>
+                                <td>Score Field 7</td>
+                                <td>Grades Used</td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 
 <script src="~/Scripts/Custom/predict.js"></script>

@@ -5,6 +5,6 @@ namespace Interfaces
     {
         int GreyhoundID { get; set; }
         string Name { get; set; }
-        System.Collections.Generic.ICollection<IRace> Races { get; set; }
+        System.Collections.Generic.ICollection<IResult> Races { get; set; }
     }
 }

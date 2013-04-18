@@ -3,39 +3,10 @@ function Runner(trap, name) {
     var self = this;
     self.Trap = ko.observable(trap);
     self.Name = ko.observable(name);
-    self.TrapLabel = ko.computed(function () {
+    self.TrapLabel = ko.computed(function () { //using this to provide a title for each input for the individual race section
         return "Trap " + self.Trap();
     });
 }
-
-//for (var i in data) {
-//    var image = document.createElement("img");
-//    ///Home/GetProductDetails?productImageID=1
-//    var link = document.createElement("a");
-//    var URL = "/Home/GetProductDetails?productImageID=" + data[i].ImageID;
-//    link.setAttribute("href", URL);
-//    image.setAttribute("src", data[i].ImageURL);
-//    image.setAttribute("alt", "ECS image");
-//    image.setAttribute("width", 100);
-//    image.setAttribute("height", 100);
-//    image.setAttribute("id", data[i].ImageID);
-//    $(link).append(image);
-//    $("#imagesContainer").append(link);
-//}
-
-//@* public string Name { get; set; }
-//public bool NoData { get; set; }
-//public bool scoreField1 { get; set; }
-//public int Score { get; set; }
-//public string Comments { get; set; }
-//public string scoreField2 { get; set; }
-//public int Trap { get; set; }
-//public string scoreField3 { get; set; }
-//public string scoreField4 { get; set; }
-//public string scoreField5 { get; set; }
-//public string scoreField6 { get; set; }
-//public string scoreField7 { get; set; }
-//public string GradesUsed { get; set; }*@
 
 function GetTableElement(dataElement) {
     var td = document.createElement("td");
@@ -43,7 +14,8 @@ function GetTableElement(dataElement) {
     return td;
 }
 
-function DisplayData(data) {
+//display the dummy scores in the element 'target'
+function DisplayData(data, target) {
     for (var i = 0; i < data.length; i++) {
         for (var j = 0; j < data[i].Scores.length; j++) {
             var tableRow = document.createElement("tr");
@@ -60,9 +32,8 @@ function DisplayData(data) {
             $(tableRow).append(GetTableElement(data[i].Scores[j].scoreField6));
             $(tableRow).append(GetTableElement(data[i].Scores[j].scoreField7));
             $(tableRow).append(GetTableElement(data[i].Scores[j].GradesUsed));
-            $("#result-table").append(tableRow);
+            target.append(tableRow);
         }
-        
     }
 }
 
@@ -75,7 +46,7 @@ function RunnerInputViewModel() {
     //Burn Brae
     //Excel Twotone
     //Opening Piper
-    self.runners = ko.observableArray([
+    self.runners = ko.observableArray([ //used for table initialisation only, the collection that goes to server is runnersFull
         new Runner(1, ""),
         new Runner(2, ""),
         new Runner(3, ""),
@@ -90,6 +61,7 @@ function RunnerInputViewModel() {
         self.runners.push(new Runner(0, ""));
     };
 
+    //pushes a single race worth of greyhound names
     self.upload = function () {
         $.ajax({
             url: '/Home/GetPredictions',
@@ -98,19 +70,15 @@ function RunnerInputViewModel() {
             data: ko.toJSON(self.runnersFull()),
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                var text = "Scores: ";
-                //data[0].Scores[0].scoreField6
-               
-                for (var i = 0; i < data.length; i++) {
-                    for (var j = 0; j < data[i].Scores.length; j++) {
-                        text += data[i].Scores[j].Name;
-                    }
-                }
-                DisplayData(data);
+                DisplayData(data, $("#result-table"));
             }
         });
     };
 
+    //custom binding for the ko_autocomplete html element (the name input box) that makes the input a jquery autocomplete and handles
+    //getting the autocomplete list, pushing the selcted item into the runners collection and removing a deleted runner from the runners collection.
+    //params().trapValue() takes its value from this: {trapValue: Trap} (in the input's databind field), 'Trap' is an attribute of Runner and is also 
+    //part of the 'value: ' binding.
     ko.bindingHandlers.ko_autocomplete = {
         init: function (element, params) {
             $(element).autocomplete();
@@ -129,15 +97,41 @@ function RunnerInputViewModel() {
                         }
                     });
                 },
-                select: function (event, ui) {
+                select: function (event, ui) { //autocomplete item selected so push it to the runners collection
                     self.runnersFull.push(new Runner(params().trapValue(), ui.item.value));
+                },
+                change: function (event, ui) {
+                    if (ui.item === null) { //name deleted so need to remove that runner
+                        for (var i in self.runnersFull()) {
+                            if (self.runnersFull()[i].Trap() === params().trapValue()) {
+                                self.runnersFull.remove(self.runnersFull()[i]);
+                            }
+                        }
+                    }
                 }
 
             });
         }
     };
 
+    
 }
+
+//pushes a whole meetings worth of greyhound names to the server
+$("#load-meeting").click(function () {
+    var runners = $("#race-meeting-textarea").val();
+    var data = JSON.stringify({ multipleRace_Runners: $("#race-meeting-textarea").val() });
+    $.ajax({
+        url: '/Home/GetPredictions',
+        type: 'POST',
+        dataType: 'json',
+        data: JSON.stringify({ multipleRace_Runners: $("#race-meeting-textarea").val() }),
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            DisplayData(data, $("#batch-result-table"));
+        }
+    });
+});
 
 $(document).ready(function () {
     ko.applyBindings(new RunnerInputViewModel());

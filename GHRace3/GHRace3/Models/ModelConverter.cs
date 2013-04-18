@@ -6,6 +6,9 @@ using System.Web;
 
 namespace GHRace3.Models
 {
+    /// <summary>
+    /// Converts the generic track / greyhound / result classes to the versions used in the model
+    /// </summary>
     public class ModelConverter
     {
         public static Track ConvertToTrack(Interfaces.ITrack item)
@@ -25,18 +28,18 @@ namespace GHRace3.Models
                 lg.Add(new Greyhound 
                 {
                     Name = item.Name,
-                    Races = GetRaces(item.Races)
+                    Results = GetResults(item.Races)
                 });
             }
             return lg;
         }
 
-        private static ICollection<Race> GetRaces(ICollection<Interfaces.IRace> collection)
+        private static ICollection<Result> GetResults(ICollection<Interfaces.IResult> collection)
         {
-            List<Race> lr = new List<Race>();
+            List<Result> lr = new List<Result>();
             foreach (var item in collection)
             {
-                lr.Add(new Race
+                lr.Add(new Result
                 {
                     Comments = item.Comments,
                     Date = item.Date,

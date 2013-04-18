@@ -3,8 +3,7 @@
 }
 
 tr, td{
-    
-    font-size:x-small;
+    /*font-size:small;*/
 }
 
 .table-header td{
@@ -14,9 +13,12 @@ tr, td{
 #load-url-text-area{
     height:300px;
     resize: none;
-    
 }
 
-
+#race-meeting-section textarea{
+    height:400px;
+    width:179px;
+    resize:none;
+}
 
 
